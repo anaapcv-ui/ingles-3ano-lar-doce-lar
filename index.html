@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lar Doce Lar do Tato 🐢 — Inglês Unit 7</title>
+<style>
+  :root{
+    --verde:#2e9e6b; --verde-claro:#d6f5e6; --oceano:#2b7fc4; --oceano-claro:#d6ecfb;
+    --sol:#f6c343; --coral:#f0806a; --coral-claro:#ffe3dc;
+    --texto:#2c3e46; --papel:#fffdf7; --borda:#e7e0cf;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Comic Sans MS','Segoe UI',Verdana,sans-serif;
+    background:linear-gradient(160deg,#eafaf1 0%,#e3f1fb 100%);
+    color:var(--texto); line-height:1.5; font-size:17px;
+  }
+  header{
+    background:linear-gradient(135deg,var(--verde),var(--oceano));
+    color:#fff; padding:18px 16px 14px; text-align:center;
+    box-shadow:0 4px 14px rgba(0,0,0,.15);
+  }
+  header h1{margin:0; font-size:1.7em; text-shadow:1px 2px 0 rgba(0,0,0,.2);}
+  header .sub{font-size:.95em; margin-top:4px; opacity:.95;}
+  header .prova{display:inline-block; margin-top:8px; background:var(--sol); color:#5a4300;
+    padding:4px 14px; border-radius:20px; font-weight:bold; font-size:.9em;}
+  .tato{font-size:2.2em; display:block; animation:bob 2.5s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-6px) rotate(3deg);}}
+
+  nav{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:6px;
+    background:#fff; padding:8px; position:sticky; top:0; z-index:40;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+  }
+  nav button{
+    border:none; cursor:pointer; font-family:inherit; font-size:.92em; font-weight:bold;
+    padding:8px 12px; border-radius:16px; background:var(--verde-claro); color:var(--texto);
+    transition:.15s;
+  }
+  nav button:hover{transform:translateY(-2px);}
+  nav button.ativa{background:var(--verde); color:#fff;}
+
+  main{max-width:860px; margin:0 auto; padding:16px 14px 60px;}
+  .aba{display:none; animation:fade .3s;}
+  .aba.ativa{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .card{background:var(--papel); border:2px solid var(--borda); border-radius:18px;
+    padding:16px 18px; margin:14px 0; box-shadow:0 3px 8px rgba(0,0,0,.06);}
+  h2{color:var(--verde); margin:.2em 0 .5em; font-size:1.35em;}
+  h3{color:var(--oceano); margin:.6em 0 .3em;}
+  .en{font-weight:bold; color:var(--oceano);}
+  .pt{color:#6b7a80; font-style:italic;}
+
+  .audio{
+    border:none; cursor:pointer; background:var(--sol); border-radius:50%;
+    width:34px; height:34px; font-size:1em; vertical-align:middle; margin:0 4px;
+    box-shadow:0 2px 4px rgba(0,0,0,.15); transition:.1s;
+  }
+  .audio:hover{transform:scale(1.12);}
+  .audio:active{transform:scale(.95);}
+
+  .vocab-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px;}
+  .vcard{background:#fff; border:2px solid var(--verde-claro); border-radius:16px;
+    padding:12px; text-align:center; box-shadow:0 2px 6px rgba(0,0,0,.06);}
+  .vcard .emoji{font-size:2.2em; display:block;}
+  .vcard .word{font-weight:bold; color:var(--oceano); font-size:1.15em; margin-top:4px;}
+  .vcard .trad{color:#6b7a80; font-size:.9em;}
+
+  .bloco{border-radius:16px; padding:0; margin:14px 0; overflow:hidden; border:2px solid var(--borda);}
+  .bloco .cab{padding:12px 16px; cursor:pointer; font-weight:bold; font-size:1.1em;
+    display:flex; justify-content:space-between; align-items:center; color:#fff;}
+  .bloco .corpo{padding:16px; background:#fff; display:none;}
+  .bloco.aberto .corpo{display:block;}
+  .bloco.travado{opacity:.55;}
+  .bloco .cadeado{font-size:.8em; font-weight:normal;}
+
+  .pergunta{margin:14px 0; padding:12px; background:#f7fbf9; border-radius:12px; border:1px dashed var(--verde-claro);}
+  .pergunta .enun{font-weight:bold; margin-bottom:8px;}
+  .opcoes{display:flex; flex-direction:column; gap:7px;}
+  .opcoes button{
+    text-align:left; border:2px solid var(--borda); background:#fff; cursor:pointer;
+    padding:10px 12px; border-radius:12px; font-family:inherit; font-size:1em; transition:.1s;
+  }
+  .opcoes button:hover{border-color:var(--oceano);}
+  .opcoes button.certa{background:#d8f5e3; border-color:var(--verde); font-weight:bold;}
+  .opcoes button.errada{background:#ffdede; border-color:var(--coral);}
+  .opcoes button:disabled{cursor:default;}
+  .feedback{margin-top:8px; padding:9px 11px; border-radius:10px; font-size:.95em; display:none;}
+  .feedback.ok{background:#d8f5e3; color:#1e6e46; display:block;}
+  .feedback.no{background:#ffe3dc; color:#a53d29; display:block;}
+
+  .barra{height:16px; background:#e7e0cf; border-radius:10px; overflow:hidden; margin:10px 0;}
+  .barra > div{height:100%; width:0; background:linear-gradient(90deg,var(--verde),var(--sol)); transition:.4s;}
+  .placar{font-weight:bold; color:var(--coral);}
+
+  .btn{display:inline-block; border:none; cursor:pointer; font-family:inherit; font-weight:bold;
+    background:var(--verde); color:#fff; padding:11px 20px; border-radius:16px; font-size:1em;
+    margin:8px 4px; box-shadow:0 3px 6px rgba(0,0,0,.12); transition:.12s;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn.sec{background:var(--oceano);}
+  .btn.sol{background:var(--sol); color:#5a4300;}
+  .btn:disabled{opacity:.5; cursor:default; transform:none;}
+
+  .resultado{text-align:center; padding:20px;}
+  .resultado .nota{font-size:2.4em; font-weight:bold; color:var(--verde);}
+  .estrelas{font-size:1.6em;}
+
+  .pegadinha{background:var(--coral-claro); border-left:5px solid var(--coral); border-radius:0 12px 12px 0;
+    padding:12px 14px; margin:10px 0;}
+  table.cobertura{width:100%; border-collapse:collapse; margin-top:10px;}
+  table.cobertura th,table.cobertura td{border:1px solid var(--borda); padding:7px 9px; text-align:left; font-size:.92em;}
+  table.cobertura th{background:var(--verde-claro);}
+
+  .relampago{margin:8px 0; padding:10px 12px; background:#fff; border:2px solid var(--oceano-claro); border-radius:12px; cursor:pointer;}
+  .relampago .resp{display:none; margin-top:6px; color:var(--verde); font-weight:bold;}
+  .relampago.aberto .resp{display:block;}
+
+  .painel-save{background:#fff; border:2px dashed var(--oceano); border-radius:14px; padding:12px; margin:16px 0; font-size:.9em;}
+  .painel-save .btn{padding:8px 14px; font-size:.9em;}
+
+  .modal-bg{display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:100; align-items:center; justify-content:center;}
+  .modal-bg.on{display:flex;}
+  .modal{background:#fff; border-radius:18px; padding:20px; max-width:380px; width:90%; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.3);}
+  .modal input{font-family:inherit; font-size:1.1em; padding:8px; border:2px solid var(--borda); border-radius:10px; width:70%; text-align:center;}
+
+  .dica{background:#fff6da; border:2px solid var(--sol); border-radius:12px; padding:10px 14px; margin:8px 0;}
+  footer{text-align:center; color:#6b7a80; font-size:.85em; padding:20px;}
+  .chip{display:inline-block; background:var(--verde-claro); border-radius:20px; padding:4px 10px; margin:3px; font-weight:bold; color:var(--oceano);}
+</style>
+</head>
+<body>
+<header>
+  <span class="tato">🐢</span>
+  <h1>Lar Doce Lar do Tato</h1>
+  <div class="sub">Inglês • 3º ano • Unit 7 — <em>Home Sweet Home</em></div>
+  <div class="prova">📅 Prova: segunda-feira, 05/10</div>
+</header>
+
+<nav id="nav">
+  <button data-aba="inicio" class="ativa">🏠 Início</button>
+  <button data-aba="leitura">📖 Visitas</button>
+  <button data-aba="quiz">🎯 Jogo</button>
+  <button data-aba="resumo">🗺️ Mapa das Casas</button>
+  <button data-aba="simulado">📝 Grande Passeio</button>
+  <button data-aba="pais">📊 Pais</button>
+</nav>
+
+<main>
+  <!-- INÍCIO -->
+  <section id="inicio" class="aba ativa">
+    <div class="card">
+      <h2>Oi, jovem aprendiz! 🐢</h2>
+      <p>Eu sou o <b>Tato</b>, a tartaruga que carrega a casa nas costas! Nesta unidade vamos
+      aprender a falar, em inglês, <b>onde a gente mora</b> e <b>os tipos de casa e de lugar</b>.
+      Clique no 🔊 para ouvir as palavras em inglês quantas vezes quiser.</p>
+    </div>
+    <div class="card">
+      <h3>📌 O que vai cair na prova</h3>
+      <p>🏰 <b>Tipos de moradia:</b> castle, trailer, cave, house, boat, apartment.<br>
+      🌍 <b>Lugares/ambientes:</b> ocean, desert, jungle, woods, city, country.<br>
+      🗣️ <b>Perguntar e responder:</b> <span class="en">Where do you live?</span> → <span class="en">I live in the…</span><br>
+      🐾 <b>Animais e onde vivem:</b> <span class="en">The [animal] lives in the [place].</span><br>
+      🙋 <b>Pronomes:</b> I / You / He / She / It (com <span class="en">he/she lives</span>).<br>
+      🔤 <b>Phonics (sons):</b> igh / y / ie — como em <span class="en">high, sky, pie</span>.</p>
+    </div>
+    <div class="card">
+      <h3>🧭 Trilha de estudo sugerida</h3>
+      <p>1️⃣ <b>Visitas</b> (ler e aprender) → 2️⃣ <b>Jogo</b> (testar) → 3️⃣ <b>Mapa das Casas</b> (revisar) → 4️⃣ <b>Grande Passeio</b> (simulado).</p>
+      <button class="btn" onclick="irPara('leitura')">Começar as Visitas 🚪</button>
+    </div>
+    <div class="painel-save">
+      💾 <b>Seu progresso fica salvo</b> neste aparelho.
+      <div><button class="btn sec" onclick="exportar()">📥 Exportar</button>
+      <button class="btn sol" onclick="importarAbrir()">📤 Importar</button>
+      <button class="btn" style="background:var(--coral)" onclick="zerarAbrir()">🗑️ Zerar tudo</button></div>
+      <div id="saveInfo" style="margin-top:6px;color:#6b7a80;"></div>
+      <input type="file" id="fileImp" accept="application/json" style="display:none">
+    </div>
+  </section>
+
+  <!-- LEITURA GUIADA -->
+  <section id="leitura" class="aba">
+    <div class="card">
+      <h2>📖 Visitas do Tato</h2>
+      <p>Cada porta é uma visita. Leia, ouça as palavras no 🔊 e responda as 3 perguntinhas para abrir a próxima porta!</p>
+      <div class="barra"><div id="barraLeitura"></div></div>
+      <div class="placar" id="placarLeitura">⭐ 0 de 18 perguntas</div>
+    </div>
+    <div id="blocos"></div>
+    <div class="card" id="fimLeitura" style="display:none;">
+      <h3>⚠️ Cuidado com as pegadinhas!</h3>
+      <div class="pegadinha">🏰 <b>house</b> é casa; <b>home</b> é lar. Na prova, "casa" = <b>house</b>.</div>
+      <div class="pegadinha">🧭 Com <b>ele/ela</b> (he/she) o verbo vira <b>lives</b> (com S): <span class="en">She lives…</span></div>
+      <div class="pegadinha">🌊 <b>ocean</b> é o mar/oceano (um LUGAR), não é uma casa.</div>
+      <div class="pegadinha">🔤 <b>sky, fly, my</b> têm o som do <b>y</b>; <b>pie</b> tem o som do <b>ie</b>; <b>high</b> tem o <b>igh</b>.</div>
+      <div class="pegadinha">🏕️ <b>trailer</b> é uma casa que anda (motorhome); <b>cave</b> é caverna.</div>
+      <h3>🗂️ Onde estudei cada tópico</h3>
+      <table class="cobertura">
+        <tr><th>Tópico</th><th>Visita</th></tr>
+        <tr><td>Tipos de moradia</td><td>Visita 1</td></tr>
+        <tr><td>Lugares / ambientes</td><td>Visita 2</td></tr>
+        <tr><td>Where do you live? / I live in the…</td><td>Visita 3</td></tr>
+        <tr><td>Animais e seus lugares</td><td>Visita 4</td></tr>
+        <tr><td>Pronomes I/You/He/She/It</td><td>Visita 5</td></tr>
+        <tr><td>Phonics igh / y / ie</td><td>Visita 6</td></tr>
+      </table>
+      <button class="btn" onclick="irPara('quiz')">Ir para o Jogo 🎯</button>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="aba">
+    <div class="card">
+      <h2>🎯 Jogo do Tato</h2>
+      <p>10 perguntas rapidinhas! Clique na resposta. Depois que você responde, aparece o 🔊 para ouvir a frase em inglês.</p>
+      <div class="barra"><div id="barraQuiz"></div></div>
+      <div class="placar" id="placarQuiz">⭐ 0 acertos</div>
+    </div>
+    <div id="quizLista"></div>
+    <div class="card" id="fimQuiz" style="display:none;"></div>
+  </section>
+
+  <!-- RESUMO -->
+  <section id="resumo" class="aba">
+    <div class="card">
+      <h2>🗺️ Mapa das Casas</h2>
+      <p>Revisão rapidinha! Toque no 🔊 para ouvir cada palavra em inglês.</p>
+    </div>
+    <div class="card">
+      <h3>🏠 Tipos de moradia (homes)</h3>
+      <div class="vocab-grid" id="gridHomes"></div>
+    </div>
+    <div class="card">
+      <h3>🌍 Lugares / ambientes (places)</h3>
+      <div class="vocab-grid" id="gridPlaces"></div>
+    </div>
+    <div class="card">
+      <h3>🗣️ Frases importantes</h3>
+      <p><span class="en">Where do you live?</span> <button class="audio" onclick="speak('Where do you live?')">🔊</button> <span class="pt">— Onde você mora?</span></p>
+      <p><span class="en">I live in the city.</span> <button class="audio" onclick="speak('I live in the city.')">🔊</button> <span class="pt">— Eu moro na cidade.</span></p>
+      <p><span class="en">This is my house.</span> <button class="audio" onclick="speak('This is my house.')">🔊</button> <span class="pt">— Esta é minha casa.</span></p>
+      <p><span class="en">The fish lives in the ocean.</span> <button class="audio" onclick="speak('The fish lives in the ocean.')">🔊</button> <span class="pt">— O peixe vive no oceano.</span></p>
+    </div>
+    <div class="card">
+      <h3>🐾 Animais e seus lugares</h3>
+      <div id="gridAnimais" class="vocab-grid"></div>
+    </div>
+    <div class="card">
+      <h3>🙋 Pronomes (quem mora?)</h3>
+      <p><span class="chip">I</span> eu &nbsp; <span class="chip">You</span> você &nbsp; <span class="chip">He</span> ele &nbsp; <span class="chip">She</span> ela &nbsp; <span class="chip">It</span> isto (coisa/animal)</p>
+      <p><span class="en">I live</span> / <span class="en">You live</span> / <span class="en">He lives</span> / <span class="en">She lives</span> / <span class="en">It lives</span>
+      <button class="audio" onclick="speak('I live. You live. He lives. She lives. It lives.')">🔊</button></p>
+      <div class="dica">💡 Com <b>He, She, It</b> o verbo ganha <b>S</b>: <span class="en">lives</span>!</div>
+    </div>
+    <div class="card">
+      <h3>🔤 Phonics — sons igh / y / ie</h3>
+      <p><span class="chip">igh</span> → <span class="en">high</span> <button class="audio" onclick="speak('high')">🔊</button></p>
+      <p><span class="chip">y</span> → <span class="en">sky, fly, my</span> <button class="audio" onclick="speak('sky, fly, my')">🔊</button></p>
+      <p><span class="chip">ie</span> → <span class="en">pie</span> <button class="audio" onclick="speak('pie')">🔊</button></p>
+      <div class="dica">🎵 Chant: <span class="en">The birds fly high in the sky. The birds love apple pie.</span>
+      <button class="audio" onclick="speak('The birds fly high in the sky. The birds love apple pie.')">🔊</button></div>
+    </div>
+    <div class="card">
+      <h3>⚡ Quiz relâmpago</h3>
+      <p>Clique na pergunta para ver a resposta!</p>
+      <div id="relampagoLista"></div>
+      <button class="btn" onclick="irPara('simulado')">Ir para o Grande Passeio 📝</button>
+    </div>
+  </section>
+
+  <!-- SIMULADO -->
+  <section id="simulado" class="aba">
+    <div class="card">
+      <h2>📝 Grande Passeio</h2>
+      <p>20 perguntas para treinar como na prova. Responda tudo e clique em <b>Ver resultado</b> para o troféu e o gabarito explicado (com 🔊).</p>
+      <div class="barra"><div id="barraSim"></div></div>
+      <div class="placar" id="placarSim">Respondidas: 0 de 20</div>
+    </div>
+    <div id="simLista"></div>
+    <div class="card" style="text-align:center;">
+      <button class="btn sol" id="btnResultado" onclick="verResultadoSim()">🏆 Ver resultado</button>
+    </div>
+    <div class="card" id="fimSim" style="display:none;"></div>
+  </section>
+
+  <!-- PAIS -->
+  <section id="pais" class="aba">
+    <div class="card">
+      <h2>📊 Relatório para os pais</h2>
+      <p>Digite o código da família para ver o desempenho.</p>
+      <input type="password" id="codPais" placeholder="código" style="font-family:inherit;font-size:1.1em;padding:8px;border:2px solid var(--borda);border-radius:10px;">
+      <button class="btn" onclick="abrirPais()">Ver</button>
+      <div id="relatorioPais" style="display:none; margin-top:14px;"></div>
+    </div>
+  </section>
+</main>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modalBox"></div>
+</div>
+
+<footer>Feito com 🐢 para estudar brincando — Lar Doce Lar do Tato · Unit 7</footer>
+
+<script>
+/* ---------- ÁUDIO (inglês en-US) ---------- */
+function speak(txt){
+  try{
+    if(!('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(txt);
+    u.lang = 'en-US';
+    u.rate = 1;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+try{ if('speechSynthesis' in window){ speechSynthesis.getVoices(); } }catch(e){}
+
+/* ---------- ARMAZENAMENTO (try/catch + reserva) ---------- */
+var _mem = {};
+var store = {
+  get:function(k){ try{ return localStorage.getItem(k); }catch(e){ return (k in _mem)?_mem[k]:null; } },
+  set:function(k,v){ try{ localStorage.setItem(k,v); }catch(e){ _mem[k]=v; } },
+  del:function(k){ try{ localStorage.removeItem(k); }catch(e){ delete _mem[k]; } }
+};
+var CHAVE = 'tato_un7';
+var estado = { leitura:{}, quiz:{}, sim:{}, simVisto:false, quando:'' };
+function carregar(){
+  var raw = store.get(CHAVE);
+  if(raw){ try{ var o=JSON.parse(raw); if(o && typeof o==='object'){ estado = Object.assign(estado,o); } }catch(e){} }
+}
+function salvar(){
+  estado.quando = new Date().toLocaleString('pt-BR');
+  store.set(CHAVE, JSON.stringify(estado));
+  var el=document.getElementById('saveInfo');
+  if(el) el.textContent = '✔️ Salvo em '+estado.quando;
+}
+
+/* ---------- NAVEGAÇÃO ABAS ---------- */
+function irPara(id){
+  document.querySelectorAll('.aba').forEach(function(a){ a.classList.remove('ativa'); });
+  document.querySelectorAll('#nav button').forEach(function(b){ b.classList.remove('ativa'); });
+  var sec=document.getElementById(id); if(sec) sec.classList.add('ativa');
+  var btn=document.querySelector('#nav button[data-aba="'+id+'"]'); if(btn) btn.classList.add('ativa');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('#nav button').forEach(function(b){
+  b.addEventListener('click',function(){ irPara(b.getAttribute('data-aba')); });
+});
+
+/* ---------- EMBARALHADOR (mulberry32, por conteúdo) ---------- */
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function embaralhar(arr, seed){
+  var r=mulberry32(seed), a=arr.slice();
+  for(var i=a.length-1;i>0;i--){ var j=Math.floor(r()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; }
+  return a;
+}
+
+/* ================= DADOS ================= */
+var homes = [
+  {emoji:'🏰', en:'castle', pt:'castelo'},
+  {emoji:'🚐', en:'trailer', pt:'trailer (casa que anda)'},
+  {emoji:'🕳️', en:'cave', pt:'caverna'},
+  {emoji:'🏠', en:'house', pt:'casa'},
+  {emoji:'⛵', en:'boat', pt:'barco'},
+  {emoji:'🏢', en:'apartment', pt:'apartamento'}
+];
+var places = [
+  {emoji:'🌊', en:'ocean', pt:'oceano'},
+  {emoji:'🏜️', en:'desert', pt:'deserto'},
+  {emoji:'🌴', en:'jungle', pt:'selva'},
+  {emoji:'🌲', en:'woods', pt:'bosque/floresta'},
+  {emoji:'🏙️', en:'city', pt:'cidade'},
+  {emoji:'🌾', en:'country', pt:'campo (zona rural)'}
+];
+var animais = [
+  {emoji:'🦎', en:'The iguana lives in the desert.', pt:'A iguana vive no deserto.'},
+  {emoji:'🐦', en:'The bird lives in the city.', pt:'O pássaro vive na cidade.'},
+  {emoji:'🐻', en:'The bear lives in the woods.', pt:'O urso vive no bosque.'},
+  {emoji:'🐟', en:'The fish lives in the ocean.', pt:'O peixe vive no oceano.'},
+  {emoji:'🐄', en:'The cow lives in the country.', pt:'A vaca vive no campo.'},
+  {emoji:'🐒', en:'The monkey lives in the jungle.', pt:'O macaco vive na selva.'}
+];
+
+/* ---------- LEITURA GUIADA ---------- */
+var blocos = [
+  { cor:'#2e9e6b', emoji:'🏰', titulo:'Visita 1 — Tipos de casa',
+    html:'<p>Existem muitos tipos de moradia! Ouça cada uma:</p>'+
+      '<p>🏰 <span class="en">castle</span> <button class="audio" onclick="speak(\'castle\')">🔊</button> <span class="pt">castelo</span> &nbsp; '+
+      '🚐 <span class="en">trailer</span> <button class="audio" onclick="speak(\'trailer\')">🔊</button> <span class="pt">casa que anda</span></p>'+
+      '<p>🕳️ <span class="en">cave</span> <button class="audio" onclick="speak(\'cave\')">🔊</button> <span class="pt">caverna</span> &nbsp; '+
+      '🏠 <span class="en">house</span> <button class="audio" onclick="speak(\'house\')">🔊</button> <span class="pt">casa</span></p>'+
+      '<p>⛵ <span class="en">boat</span> <button class="audio" onclick="speak(\'boat\')">🔊</button> <span class="pt">barco</span> &nbsp; '+
+      '🏢 <span class="en">apartment</span> <button class="audio" onclick="speak(\'apartment\')">🔊</button> <span class="pt">apartamento</span></p>'+
+      '<p>Para mostrar sua casa: <span class="en">This is my house.</span> <button class="audio" onclick="speak(\'This is my house.\')">🔊</button></p>',
+    perguntas:[
+      {q:'Como se diz <b>castelo</b> em inglês?', opts:[{t:'castle',c:true},{t:'cave',c:false},{t:'house',c:false},{t:'boat',c:false}], exp:'Castle = castelo. Cave é caverna.'},
+      {q:'<span class="en">This is my boat.</span> quer dizer…', opts:[{t:'Este é meu barco.',c:true},{t:'Esta é minha casa.',c:false},{t:'Este é meu castelo.',c:false},{t:'Este é meu apartamento.',c:false}], exp:'boat = barco.'},
+      {q:'Qual destas é uma <b>moradia</b> (lugar onde se mora)?', opts:[{t:'apartment',c:true},{t:'ocean',c:false},{t:'desert',c:false},{t:'jungle',c:false}], exp:'apartment é uma moradia. Ocean, desert e jungle são lugares/ambientes.'}
+    ]},
+  { cor:'#2b7fc4', emoji:'🌍', titulo:'Visita 2 — Lugares e ambientes',
+    html:'<p>Onde ficam as casas? Em muitos lugares diferentes!</p>'+
+      '<p>🌊 <span class="en">ocean</span> <button class="audio" onclick="speak(\'ocean\')">🔊</button> <span class="pt">oceano</span> &nbsp; '+
+      '🏜️ <span class="en">desert</span> <button class="audio" onclick="speak(\'desert\')">🔊</button> <span class="pt">deserto</span></p>'+
+      '<p>🌴 <span class="en">jungle</span> <button class="audio" onclick="speak(\'jungle\')">🔊</button> <span class="pt">selva</span> &nbsp; '+
+      '🌲 <span class="en">woods</span> <button class="audio" onclick="speak(\'woods\')">🔊</button> <span class="pt">bosque</span></p>'+
+      '<p>🏙️ <span class="en">city</span> <button class="audio" onclick="speak(\'city\')">🔊</button> <span class="pt">cidade</span> &nbsp; '+
+      '🌾 <span class="en">country</span> <button class="audio" onclick="speak(\'country\')">🔊</button> <span class="pt">campo</span></p>',
+    perguntas:[
+      {q:'<span class="en">desert</span> em português é…', opts:[{t:'deserto',c:true},{t:'floresta',c:false},{t:'oceano',c:false},{t:'cidade',c:false}], exp:'desert = deserto (lugar seco, com areia).'},
+      {q:'Onde há muita areia e é bem seco?', opts:[{t:'desert',c:true},{t:'ocean',c:false},{t:'jungle',c:false},{t:'city',c:false}], exp:'O deserto (desert) é seco e cheio de areia.'},
+      {q:'<span class="en">woods</span> quer dizer…', opts:[{t:'bosque / floresta',c:true},{t:'campo',c:false},{t:'cidade',c:false},{t:'caverna',c:false}], exp:'woods = bosque, cheio de árvores.'}
+    ]},
+  { cor:'#f0806a', emoji:'🗣️', titulo:'Visita 3 — Onde você mora?',
+    html:'<p>Para perguntar onde alguém mora, usamos:</p>'+
+      '<p><span class="en">Where do you live?</span> <button class="audio" onclick="speak(\'Where do you live?\')">🔊</button> <span class="pt">— Onde você mora?</span></p>'+
+      '<p>E respondemos com <span class="en">I live in the…</span> + o lugar:</p>'+
+      '<p><span class="en">I live in the city.</span> <button class="audio" onclick="speak(\'I live in the city.\')">🔊</button> <span class="pt">Eu moro na cidade.</span></p>'+
+      '<p><span class="en">I live in the country.</span> <button class="audio" onclick="speak(\'I live in the country.\')">🔊</button> <span class="pt">Eu moro no campo.</span></p>'+
+      '<p><span class="en">I live in the woods.</span> <button class="audio" onclick="speak(\'I live in the woods.\')">🔊</button> <span class="pt">Eu moro no bosque.</span></p>',
+    perguntas:[
+      {q:'<span class="en">Where do you live?</span> significa…', opts:[{t:'Onde você mora?',c:true},{t:'O que você faz?',c:false},{t:'Quem é você?',c:false},{t:'Como você está?',c:false}], exp:'Where = onde; live = morar.'},
+      {q:'Para responder onde moramos, começamos com…', opts:[{t:'I live in the…',c:true},{t:'I like…',c:false},{t:'This is…',c:false},{t:'I have…',c:false}], exp:'A resposta é "I live in the…" + o lugar.'},
+      {q:'<span class="en">I live in the city.</span> =', opts:[{t:'Eu moro na cidade.',c:true},{t:'Eu moro no campo.',c:false},{t:'Eu gosto da cidade.',c:false},{t:'Esta é minha cidade.',c:false}], exp:'city = cidade; I live = eu moro.'}
+    ]},
+  { cor:'#8e6fc4', emoji:'🐾', titulo:'Visita 4 — Animais e seus lugares',
+    html:'<p>Cada animal vive num lugar! Padrão: <span class="en">The [animal] lives in the [place].</span></p>'+
+      '<p>🦎 <span class="en">The iguana lives in the desert.</span> <button class="audio" onclick="speak(\'The iguana lives in the desert.\')">🔊</button></p>'+
+      '<p>🐦 <span class="en">The bird lives in the city.</span> <button class="audio" onclick="speak(\'The bird lives in the city.\')">🔊</button></p>'+
+      '<p>🐻 <span class="en">The bear lives in the woods.</span> <button class="audio" onclick="speak(\'The bear lives in the woods.\')">🔊</button></p>'+
+      '<p>🐟 <span class="en">The fish lives in the ocean.</span> <button class="audio" onclick="speak(\'The fish lives in the ocean.\')">🔊</button></p>'+
+      '<p>🐄 <span class="en">The cow lives in the country.</span> &nbsp; 🐒 <span class="en">The monkey lives in the jungle.</span></p>',
+    perguntas:[
+      {q:'<span class="en">The fish lives in the ___.</span>', opts:[{t:'ocean',c:true},{t:'desert',c:false},{t:'woods',c:false},{t:'city',c:false}], exp:'O peixe (fish) vive no oceano (ocean).'},
+      {q:'<span class="en">The monkey lives in the ___.</span>', opts:[{t:'jungle',c:true},{t:'ocean',c:false},{t:'country',c:false},{t:'cave',c:false}], exp:'O macaco (monkey) vive na selva (jungle).'},
+      {q:'Falando de UM animal (ele/ela), usamos <span class="en">live</span> ou <span class="en">lives</span>?', opts:[{t:'lives (com S)',c:true},{t:'live',c:false},{t:'living',c:false},{t:'lived',c:false}], exp:'Com he/she/it (ele/ela/isto) o verbo ganha S: lives.'}
+    ]},
+  { cor:'#d98e2b', emoji:'🙋', titulo:'Visita 5 — Pronomes',
+    html:'<p>Os pronomes dizem QUEM mora:</p>'+
+      '<p><span class="chip">I</span> eu &nbsp; <span class="chip">You</span> você &nbsp; <span class="chip">He</span> ele &nbsp; <span class="chip">She</span> ela &nbsp; <span class="chip">It</span> isto (coisa/animal)</p>'+
+      '<p><span class="en">I live in a house.</span> <button class="audio" onclick="speak(\'I live in a house.\')">🔊</button></p>'+
+      '<p><span class="en">He lives in the city.</span> <button class="audio" onclick="speak(\'He lives in the city.\')">🔊</button></p>'+
+      '<p><span class="en">She lives in an apartment.</span> <button class="audio" onclick="speak(\'She lives in an apartment.\')">🔊</button></p>'+
+      '<p><span class="en">It lives in the ocean.</span> <button class="audio" onclick="speak(\'It lives in the ocean.\')">🔊</button></p>'+
+      '<div class="dica">💡 I / You → <b>live</b>. He / She / It → <b>lives</b> (com S).</div>',
+    perguntas:[
+      {q:'Qual pronome usamos para uma <b>menina</b>?', opts:[{t:'She',c:true},{t:'He',c:false},{t:'It',c:false},{t:'You',c:false}], exp:'She = ela (menina/mulher).'},
+      {q:'<span class="en">___ lives in an apartment.</span> (falando de um menino)', opts:[{t:'He',c:true},{t:'I',c:false},{t:'You',c:false},{t:'It',c:false}], exp:'He = ele. E repare: lives, com S.'},
+      {q:'Para uma <b>coisa</b> ou um <b>animal</b>, usamos…', opts:[{t:'It',c:true},{t:'He',c:false},{t:'She',c:false},{t:'You',c:false}], exp:'It = isto (coisa ou animal).'}
+    ]},
+  { cor:'#2b9ec4', emoji:'🔤', titulo:'Visita 6 — Phonics (sons igh / y / ie)',
+    html:'<p>Algumas letras fazem um som especial:</p>'+
+      '<p><span class="chip">igh</span> → <span class="en">high</span> <button class="audio" onclick="speak(\'high\')">🔊</button> <span class="pt">(alto)</span></p>'+
+      '<p><span class="chip">y</span> → <span class="en">sky, fly, my</span> <button class="audio" onclick="speak(\'sky, fly, my\')">🔊</button></p>'+
+      '<p><span class="chip">ie</span> → <span class="en">pie</span> <button class="audio" onclick="speak(\'pie\')">🔊</button> <span class="pt">(torta)</span></p>'+
+      '<div class="dica">🎵 <span class="en">The birds fly high in the sky. The birds love apple pie.</span> '+
+      '<button class="audio" onclick="speak(\'The birds fly high in the sky. The birds love apple pie.\')">🔊</button></div>',
+    perguntas:[
+      {q:'Em qual palavra aparece o grupo <b>igh</b>?', opts:[{t:'high',c:true},{t:'sky',c:false},{t:'pie',c:false},{t:'my',c:false}], exp:'high tem i-g-h (igh). sky e my têm y; pie tem ie.'},
+      {q:'<span class="en">sky</span> e <span class="en">fly</span> têm o som da letra…', opts:[{t:'Y',c:true},{t:'A',c:false},{t:'E',c:false},{t:'O',c:false}], exp:'O y em sky/fly/my faz o som "ai".'},
+      {q:'Complete: p _ _ (a torta). Faltam quais letras?', opts:[{t:'ie',c:true},{t:'igh',c:false},{t:'y',c:false},{t:'oo',c:false}], exp:'pie = p + ie.'}
+    ]}
+];
+
+function renderLeitura(){
+  var cont = document.getElementById('blocos');
+  cont.innerHTML='';
+  blocos.forEach(function(b, idx){
+    var liberado = (idx===0) || (contaBlocoFeito(idx-1));
+    var div=document.createElement('div');
+    div.className='bloco'+(idx===0?' aberto':'')+(liberado?'':' travado');
+    div.id='bloco'+idx;
+    var qhtml='';
+    b.perguntas.forEach(function(p,pi){ qhtml += renderPergunta(idx,pi,p); });
+    div.innerHTML =
+      '<div class="cab" style="background:'+b.cor+'" onclick="toggleBloco('+idx+','+liberado+')">'+
+        '<span>'+b.emoji+' '+b.titulo+'</span>'+
+        '<span class="cadeado">'+(liberado?'▼':'🔒')+'</span>'+
+      '</div>'+
+      '<div class="corpo">'+b.html+'<hr style="border:none;border-top:1px dashed #ccc;margin:14px 0">'+
+      '<p><b>Responda as 3 para abrir a próxima porta:</b></p>'+qhtml+'</div>';
+    cont.appendChild(div);
+  });
+  restaurarLeitura();
+  atualizaLeitura();
+}
+function renderPergunta(bi,pi,p){
+  var h='<div class="pergunta" id="lq'+bi+'_'+pi+'"><div class="enun">'+(pi+1)+') '+p.q+'</div><div class="opcoes">';
+  var seed = 1000*(bi+1)+(pi+1)*7;
+  var opts = embaralhar(p.opts, seed);
+  opts.forEach(function(o,oi){
+    h += '<button onclick="respLeitura('+bi+','+pi+','+(o.c?1:0)+',this)">'+String.fromCharCode(97+oi)+') '+o.t+'</button>';
+  });
+  h += '</div><div class="feedback" id="fb'+bi+'_'+pi+'"></div></div>';
+  return h;
+}
+function respLeitura(bi,pi,correta,btn){
+  var box=document.getElementById('lq'+bi+'_'+pi);
+  if(box.getAttribute('data-feito')==='1') return;
+  box.setAttribute('data-feito','1');
+  var botoes=box.querySelectorAll('.opcoes button');
+  botoes.forEach(function(x){ x.disabled=true; });
+  var fb=document.getElementById('fb'+bi+'_'+pi);
+  if(correta){ btn.classList.add('certa'); fb.className='feedback ok'; fb.innerHTML='✅ Isso! '+blocos[bi].perguntas[pi].exp; }
+  else{ btn.classList.add('errada'); fb.className='feedback no';
+    botoes.forEach(function(x){ if(x.textContent.indexOf(')')>-1){} });
+    // marca a certa
+    var opts=blocos[bi].perguntas[pi].opts;
+    botoes.forEach(function(x){ var txt=x.textContent.replace(/^[a-z]\)\s*/,''); opts.forEach(function(o){ if(o.c && txt===o.t) x.classList.add('certa'); }); });
+    fb.innerHTML='💛 Quase! '+blocos[bi].perguntas[pi].exp;
+  }
+  if(!estado.leitura[bi]) estado.leitura[bi]={};
+  estado.leitura[bi][pi]=correta?1:0;
+  salvar();
+  atualizaLeitura();
+}
+function contaBlocoFeito(bi){
+  if(!estado.leitura[bi]) return false;
+  return Object.keys(estado.leitura[bi]).length>=3;
+}
+function toggleBloco(idx,liberado){
+  if(!liberado) return;
+  var d=document.getElementById('bloco'+idx);
+  d.classList.toggle('aberto');
+}
+function restaurarLeitura(){
+  blocos.forEach(function(b,bi){
+    if(!estado.leitura[bi]) return;
+    Object.keys(estado.leitura[bi]).forEach(function(pi){
+      var box=document.getElementById('lq'+bi+'_'+pi);
+      if(!box) return;
+      box.setAttribute('data-feito','1');
+      var botoes=box.querySelectorAll('.opcoes button');
+      var acertou=estado.leitura[bi][pi]===1;
+      var opts=b.perguntas[pi].opts;
+      botoes.forEach(function(x){ x.disabled=true; var txt=x.textContent.replace(/^[a-z]\)\s*/,''); opts.forEach(function(o){ if(o.c && txt===o.t) x.classList.add('certa'); }); });
+      var fb=document.getElementById('fb'+bi+'_'+pi);
+      if(acertou){ fb.className='feedback ok'; fb.innerHTML='✅ Isso! '+b.perguntas[pi].exp; }
+      else{ fb.className='feedback no'; fb.innerHTML='💛 Quase! '+b.perguntas[pi].exp; }
+    });
+  });
+  // reabrir blocos liberados
+  blocos.forEach(function(b,bi){
+    var liberado=(bi===0)||contaBlocoFeito(bi-1);
+    var d=document.getElementById('bloco'+bi);
+    if(liberado){ d.classList.remove('travado'); var cad=d.querySelector('.cadeado'); if(cad) cad.textContent='▼'; var cab=d.querySelector('.cab'); if(cab) cab.setAttribute('onclick','toggleBloco('+bi+',true)'); }
+  });
+}
+function atualizaLeitura(){
+  var total=0, feitas=0;
+  blocos.forEach(function(b,bi){ total+=3; if(estado.leitura[bi]){ feitas+=Object.keys(estado.leitura[bi]).length; } });
+  document.getElementById('barraLeitura').style.width=(feitas/total*100)+'%';
+  document.getElementById('placarLeitura').textContent='⭐ '+feitas+' de '+total+' perguntas';
+  // liberar próximos blocos
+  blocos.forEach(function(b,bi){
+    if(bi===0) return;
+    var d=document.getElementById('bloco'+bi);
+    if(contaBlocoFeito(bi-1)){ d.classList.remove('travado'); var cad=d.querySelector('.cadeado'); if(cad && cad.textContent==='🔒') cad.textContent='▼'; var cab=d.querySelector('.cab'); if(cab) cab.setAttribute('onclick','toggleBloco('+bi+',true)'); }
+  });
+  if(feitas>=total){ document.getElementById('fimLeitura').style.display='block'; }
+}
+
+/* ---------- QUIZ (10) ---------- */
+var quiz = [
+  {q:'<span class="en">apartment</span> em português é…', en:'apartment', opts:[{t:'apartamento',c:true},{t:'castelo',c:false},{t:'caverna',c:false},{t:'barco',c:false}], exp:'apartment = apartamento.'},
+  {q:'Qual destas é uma <b>moradia</b>?', en:'house', opts:[{t:'house',c:true},{t:'ocean',c:false},{t:'desert',c:false},{t:'jungle',c:false}], exp:'house (casa) é moradia; os outros são lugares.'},
+  {q:'<span class="en">The bird lives in the ___.</span>', en:'The bird lives in the city.', opts:[{t:'city',c:true},{t:'ocean',c:false},{t:'desert',c:false},{t:'cave',c:false}], exp:'O pássaro (bird) vive na cidade (city).'},
+  {q:'<span class="en">She lives in a castle.</span> Quem mora no castelo?', en:'She lives in a castle.', opts:[{t:'Uma menina (ela)',c:true},{t:'Um menino (ele)',c:false},{t:'Uma coisa',c:false},{t:'Eu',c:false}], exp:'She = ela.'},
+  {q:'<span class="en">I live in the woods.</span> =', en:'I live in the woods.', opts:[{t:'Eu moro no bosque.',c:true},{t:'Eu moro na cidade.',c:false},{t:'Eu gosto do bosque.',c:false},{t:'Este é meu bosque.',c:false}], exp:'woods = bosque; I live = eu moro.'},
+  {q:'O som <b>igh</b> aparece em…', en:'high', opts:[{t:'high',c:true},{t:'city',c:false},{t:'boat',c:false},{t:'cave',c:false}], exp:'high tem igh (som "ai").'},
+  {q:'<span class="en">cave</span> quer dizer…', en:'cave', opts:[{t:'caverna',c:true},{t:'campo',c:false},{t:'cidade',c:false},{t:'castelo',c:false}], exp:'cave = caverna.'},
+  {q:'<span class="en">Where do you live?</span> responde-se com…', en:'I live in the city.', opts:[{t:'I live in the…',c:true},{t:'I like the…',c:false},{t:'This is the…',c:false},{t:'I play the…',c:false}], exp:'A resposta começa com "I live in the…".'},
+  {q:'Para um <b>menino</b> (ele), usamos o pronome…', en:'He lives in an apartment.', opts:[{t:'He',c:true},{t:'She',c:false},{t:'It',c:false},{t:'You',c:false}], exp:'He = ele.'},
+  {q:'<span class="en">The cow lives in the ___.</span>', en:'The cow lives in the country.', opts:[{t:'country',c:true},{t:'ocean',c:false},{t:'jungle',c:false},{t:'city',c:false}], exp:'A vaca (cow) vive no campo (country).'}
+];
+function renderQuiz(){
+  var cont=document.getElementById('quizLista'); cont.innerHTML='';
+  quiz.forEach(function(p,i){
+    var seed=100+i*20;
+    var opts=embaralhar(p.opts,seed);
+    var h='<div class="card pergunta" id="qq'+i+'"><div class="enun">'+(i+1)+') '+p.q+'</div><div class="opcoes">';
+    opts.forEach(function(o,oi){ h+='<button onclick="respQuiz('+i+','+(o.c?1:0)+',this)">'+String.fromCharCode(97+oi)+') '+o.t+'</button>'; });
+    h+='</div><div class="feedback" id="qfb'+i+'"></div></div>';
+    var div=document.createElement('div'); div.innerHTML=h; cont.appendChild(div.firstChild);
+  });
+  restaurarQuiz(); atualizaQuiz();
+}
+function respQuiz(i,correta,btn){
+  var box=document.getElementById('qq'+i);
+  if(box.getAttribute('data-feito')==='1') return;
+  box.setAttribute('data-feito','1');
+  var botoes=box.querySelectorAll('.opcoes button'); botoes.forEach(function(x){ x.disabled=true; });
+  var fb=document.getElementById('qfb'+i);
+  var opts=quiz[i].opts;
+  botoes.forEach(function(x){ var txt=x.textContent.replace(/^[a-z]\)\s*/,''); opts.forEach(function(o){ if(o.c && txt===o.t) x.classList.add('certa'); }); });
+  var audioBtn = quiz[i].en ? ' <button class="audio" onclick="speak(\''+quiz[i].en.replace(/'/g,"\\'")+'\')">🔊</button>' : '';
+  if(correta){ btn.classList.add('certa'); fb.className='feedback ok'; fb.innerHTML='✅ Acertou! '+quiz[i].exp+audioBtn; }
+  else{ btn.classList.add('errada'); fb.className='feedback no'; fb.innerHTML='💛 Quase! '+quiz[i].exp+audioBtn; }
+  estado.quiz[i]=correta?1:0; salvar(); atualizaQuiz();
+}
+function restaurarQuiz(){
+  quiz.forEach(function(p,i){
+    if(!(i in estado.quiz)) return;
+    var box=document.getElementById('qq'+i); if(!box) return;
+    box.setAttribute('data-feito','1');
+    var botoes=box.querySelectorAll('.opcoes button'); botoes.forEach(function(x){ x.disabled=true; var txt=x.textContent.replace(/^[a-z]\)\s*/,''); p.opts.forEach(function(o){ if(o.c && txt===o.t) x.classList.add('certa'); }); });
+    var fb=document.getElementById('qfb'+i);
+    var audioBtn = p.en ? ' <button class="audio" onclick="speak(\''+p.en.replace(/'/g,"\\'")+'\')">🔊</button>' : '';
+    if(estado.quiz[i]===1){ fb.className='feedback ok'; fb.innerHTML='✅ Acertou! '+p.exp+audioBtn; }
+    else{ fb.className='feedback no'; fb.innerHTML='💛 Quase! '+p.exp+audioBtn; }
+  });
+}
+function atualizaQuiz(){
+  var feitas=Object.keys(estado.quiz).length, acertos=0;
+  Object.keys(estado.quiz).forEach(function(k){ if(estado.quiz[k]===1) acertos++; });
+  document.getElementById('barraQuiz').style.width=(feitas/quiz.length*100)+'%';
+  document.getElementById('placarQuiz').textContent='⭐ '+acertos+' acertos de '+feitas+' respondidas';
+  if(feitas>=quiz.length){
+    var pct=Math.round(acertos/quiz.length*100);
+    var est=pct>=80?'⭐⭐⭐':(pct>=50?'⭐⭐':'⭐');
+    var msg=pct>=80?'Você é um craque do inglês! 🏆':(pct>=50?'Muito bem! Revise o Mapa das Casas. 🗺️':'Vamos revisar juntos nas Visitas! 📖');
+    document.getElementById('fimQuiz').style.display='block';
+    document.getElementById('fimQuiz').innerHTML='<div class="resultado"><div class="estrelas">'+est+'</div><div class="nota">'+acertos+'/'+quiz.length+'</div><p>'+msg+'</p><button class="btn" onclick="irPara(\'resumo\')">Ir para o Mapa das Casas 🗺️</button></div>';
+  }
+}
+
+/* ---------- RESUMO ---------- */
+function renderResumo(){
+  document.getElementById('gridHomes').innerHTML = homes.map(cardVocab).join('');
+  document.getElementById('gridPlaces').innerHTML = places.map(cardVocab).join('');
+  document.getElementById('gridAnimais').innerHTML = animais.map(function(a){
+    return '<div class="vcard"><span class="emoji">'+a.emoji+'</span><div class="word" style="font-size:.95em">'+a.en+'</div><div class="trad">'+a.pt+'</div><button class="audio" onclick="speak(\''+a.en.replace(/'/g,"\\'")+'\')">🔊</button></div>';
+  }).join('');
+  var rel=[
+    {q:'Como se diz "castelo"?', a:'castle 🏰'},
+    {q:'Como se pergunta "onde você mora"?', a:'Where do you live?'},
+    {q:'"The fish lives in the…"?', a:'ocean 🌊'},
+    {q:'Pronome para "ela"?', a:'She'},
+    {q:'Qual tem o som "ie"?', a:'pie 🥧'},
+    {q:'Com he/she o verbo vira…?', a:'lives (com S)'}
+  ];
+  document.getElementById('relampagoLista').innerHTML = rel.map(function(r,i){
+    return '<div class="relampago" onclick="this.classList.toggle(\'aberto\')"><b>'+(i+1)+') '+r.q+'</b><div class="resp">👉 '+r.a+'</div></div>';
+  }).join('');
+}
+function cardVocab(v){
+  return '<div class="vcard"><span class="emoji">'+v.emoji+'</span><div class="word">'+v.en+'</div><div class="trad">'+v.pt+'</div><button class="audio" onclick="speak(\''+v.en.replace(/'/g,"\\'")+'\')">🔊</button></div>';
+}
+
+/* ---------- SIMULADO (20) ---------- */
+var sim = [
+  {q:'<span class="en">castle</span> =', en:'castle', opts:[{t:'castelo',c:true},{t:'caverna',c:false},{t:'cidade',c:false},{t:'campo',c:false}], exp:'castle = castelo.'},
+  {q:'<span class="en">boat</span> =', en:'boat', opts:[{t:'barco',c:true},{t:'casa',c:false},{t:'bosque',c:false},{t:'oceano',c:false}], exp:'boat = barco.'},
+  {q:'<span class="en">desert</span> =', en:'desert', opts:[{t:'deserto',c:true},{t:'selva',c:false},{t:'cidade',c:false},{t:'barco',c:false}], exp:'desert = deserto.'},
+  {q:'<span class="en">jungle</span> =', en:'jungle', opts:[{t:'selva',c:true},{t:'campo',c:false},{t:'caverna',c:false},{t:'cidade',c:false}], exp:'jungle = selva.'},
+  {q:'<span class="en">country</span> =', en:'country', opts:[{t:'campo (zona rural)',c:true},{t:'cidade',c:false},{t:'oceano',c:false},{t:'castelo',c:false}], exp:'country = campo.'},
+  {q:'<span class="en">ocean</span> =', en:'ocean', opts:[{t:'oceano',c:true},{t:'deserto',c:false},{t:'bosque',c:false},{t:'casa',c:false}], exp:'ocean = oceano.'},
+  {q:'Qual é uma <b>moradia</b>?', en:'trailer', opts:[{t:'trailer',c:true},{t:'ocean',c:false},{t:'desert',c:false},{t:'woods',c:false}], exp:'trailer é uma casa que anda; os outros são lugares.'},
+  {q:'Qual é um <b>lugar/ambiente</b>?', en:'woods', opts:[{t:'woods',c:true},{t:'castle',c:false},{t:'boat',c:false},{t:'cave',c:false}], exp:'woods (bosque) é um lugar; os outros são moradias.'},
+  {q:'<span class="en">Where do you live?</span> =', en:'Where do you live?', opts:[{t:'Onde você mora?',c:true},{t:'Quem é você?',c:false},{t:'O que você gosta?',c:false},{t:'Como você está?',c:false}], exp:'Where = onde; live = morar.'},
+  {q:'<span class="en">I live in the city.</span> =', en:'I live in the city.', opts:[{t:'Eu moro na cidade.',c:true},{t:'Eu moro no campo.',c:false},{t:'Eu amo a cidade.',c:false},{t:'Esta é a cidade.',c:false}], exp:'I live in the city = Eu moro na cidade.'},
+  {q:'<span class="en">This is my house.</span> =', en:'This is my house.', opts:[{t:'Esta é minha casa.',c:true},{t:'Eu moro numa casa.',c:false},{t:'Aquela casa é grande.',c:false},{t:'Eu gosto de casa.',c:false}], exp:'This is my house = Esta é minha casa.'},
+  {q:'<span class="en">The iguana lives in the ___.</span>', en:'The iguana lives in the desert.', opts:[{t:'desert',c:true},{t:'ocean',c:false},{t:'city',c:false},{t:'jungle',c:false}], exp:'A iguana vive no deserto.'},
+  {q:'<span class="en">The bear lives in the ___.</span>', en:'The bear lives in the woods.', opts:[{t:'woods',c:true},{t:'ocean',c:false},{t:'country',c:false},{t:'cave',c:false}], exp:'O urso vive no bosque (woods).'},
+  {q:'<span class="en">The monkey lives in the ___.</span>', en:'The monkey lives in the jungle.', opts:[{t:'jungle',c:true},{t:'desert',c:false},{t:'city',c:false},{t:'ocean',c:false}], exp:'O macaco vive na selva (jungle).'},
+  {q:'Pronome para uma <b>menina</b>:', en:'She lives here.', opts:[{t:'She',c:true},{t:'He',c:false},{t:'It',c:false},{t:'You',c:false}], exp:'She = ela.'},
+  {q:'Pronome para uma <b>coisa ou animal</b>:', en:'It lives here.', opts:[{t:'It',c:true},{t:'He',c:false},{t:'She',c:false},{t:'You',c:false}], exp:'It = isto (coisa/animal).'},
+  {q:'<span class="en">He ___ in an apartment.</span>', en:'He lives in an apartment.', opts:[{t:'lives',c:true},{t:'live',c:false},{t:'living',c:false},{t:'lived',c:false}], exp:'Com He usamos lives (com S).'},
+  {q:'Palavra com o som de <b>y</b> (como em sky):', en:'fly', opts:[{t:'fly',c:true},{t:'house',c:false},{t:'cave',c:false},{t:'boat',c:false}], exp:'fly tem o som do y (como sky, my).'},
+  {q:'Palavra com <b>igh</b>:', en:'high', opts:[{t:'high',c:true},{t:'pie',c:false},{t:'city',c:false},{t:'sky',c:false}], exp:'high tem igh.'},
+  {q:'<span class="en">pie</span> =', en:'apple pie', opts:[{t:'torta',c:true},{t:'céu',c:false},{t:'barco',c:false},{t:'casa',c:false}], exp:'pie = torta (apple pie = torta de maçã).'}
+];
+function renderSim(){
+  var cont=document.getElementById('simLista'); cont.innerHTML='';
+  sim.forEach(function(p,i){
+    var seed=100+i*28;
+    var opts=embaralhar(p.opts,seed);
+    var h='<div class="card pergunta" id="sq'+i+'"><div class="enun">'+(i+1)+') '+p.q+'</div><div class="opcoes">';
+    opts.forEach(function(o,oi){ h+='<button onclick="respSim('+i+','+(o.c?1:0)+',this)">'+String.fromCharCode(97+oi)+') '+o.t+'</button>'; });
+    h+='</div></div>';
+    var div=document.createElement('div'); div.innerHTML=h; cont.appendChild(div.firstChild);
+  });
+  restaurarSim(); atualizaSim();
+}
+function respSim(i,correta,btn){
+  var box=document.getElementById('sq'+i);
+  // permite trocar antes de ver resultado
+  if(estado.simVisto) return;
+  var botoes=box.querySelectorAll('.opcoes button');
+  botoes.forEach(function(x){ x.classList.remove('certa','errada'); });
+  btn.classList.add(correta?'certa':'errada');
+  estado.sim[i]=correta?1:0; salvar(); atualizaSim();
+}
+function restaurarSim(){
+  sim.forEach(function(p,i){
+    if(!(i in estado.sim)) return;
+    var box=document.getElementById('sq'+i); if(!box) return;
+    // marcar a opção escolhida: não sabemos qual, mas sabemos se acertou — ao ver resultado mostramos gabarito
+  });
+}
+function atualizaSim(){
+  var feitas=Object.keys(estado.sim).length;
+  document.getElementById('barraSim').style.width=(feitas/sim.length*100)+'%';
+  document.getElementById('placarSim').textContent='Respondidas: '+feitas+' de '+sim.length;
+}
+function verResultadoSim(){
+  var feitas=Object.keys(estado.sim).length;
+  if(feitas<sim.length){ modal('Opa! 🐢','Responda todas as '+sim.length+' perguntas antes de ver o resultado. Faltam '+(sim.length-feitas)+'.'); return; }
+  estado.simVisto=true; salvar();
+  var acertos=0; Object.keys(estado.sim).forEach(function(k){ if(estado.sim[k]===1) acertos++; });
+  var pct=Math.round(acertos/sim.length*100);
+  var est=pct>=80?'🏆⭐⭐⭐':(pct>=50?'⭐⭐':'⭐');
+  var msg=pct>=80?'Parabéns, jovem aprendiz! Você está pronto para a prova! 🎉':(pct>=50?'Muito bom! Dá uma revisada no Mapa das Casas. 🗺️':'Vamos revisar as Visitas com calma. Você consegue! 💪');
+  // travar botões
+  document.querySelectorAll('#simLista .opcoes button').forEach(function(x){ x.disabled=true; });
+  var gab='<h3>📋 Gabarito explicado</h3>';
+  sim.forEach(function(p,i){
+    var certaTxt=''; p.opts.forEach(function(o){ if(o.c) certaTxt=o.t; });
+    var acertou=estado.sim[i]===1;
+    gab+='<div class="pergunta"><div class="enun">'+(i+1)+') '+p.q+'</div>'+
+      '<div class="feedback ok" style="display:block">✅ Resposta certa: <b>'+certaTxt+'</b> '+
+      '<button class="audio" onclick="speak(\''+p.en.replace(/'/g,"\\'")+'\')">🔊</button><br>'+p.exp+
+      '</div><div style="font-size:.9em;color:'+(acertou?'#1e6e46':'#a53d29')+'">'+(acertou?'Você acertou! 🎉':'Você marcou outra. Revise esta! 💛')+'</div></div>';
+  });
+  document.getElementById('fimSim').style.display='block';
+  document.getElementById('fimSim').innerHTML='<div class="resultado"><div class="estrelas">'+est+'</div><div class="nota">'+acertos+'/'+sim.length+'</div><p>'+msg+'</p></div>'+gab+
+    '<div style="text-align:center"><button class="btn sec" onclick="refazerSim()">🔄 Refazer o Grande Passeio</button></div>';
+  document.getElementById('btnResultado').disabled=true;
+  window.scrollTo({top:document.getElementById('fimSim').offsetTop-20,behavior:'smooth'});
+}
+function refazerSim(){
+  estado.sim={}; estado.simVisto=false; salvar();
+  document.getElementById('fimSim').style.display='none';
+  document.getElementById('btnResultado').disabled=false;
+  renderSim();
+  irPara('simulado');
+}
+
+/* ---------- MODAL (sem alert/confirm/prompt) ---------- */
+function modal(titulo,corpo,botoes){
+  var box=document.getElementById('modalBox');
+  var h='<h3 style="margin-top:0;color:var(--verde)">'+titulo+'</h3><div>'+corpo+'</div><div style="margin-top:14px">';
+  if(botoes){ h+=botoes; } else { h+='<button class="btn" onclick="fecharModal()">Ok 🐢</button>'; }
+  h+='</div>';
+  box.innerHTML=h;
+  document.getElementById('modalBg').classList.add('on');
+}
+function fecharModal(){ document.getElementById('modalBg').classList.remove('on'); }
+document.getElementById('modalBg').addEventListener('click',function(e){ if(e.target===this) fecharModal(); });
+
+/* ---------- EXPORTAR / IMPORTAR / ZERAR ---------- */
+function exportar(){
+  var acQuiz=0; Object.keys(estado.quiz).forEach(function(k){ if(estado.quiz[k]===1)acQuiz++; });
+  var acSim=0; Object.keys(estado.sim).forEach(function(k){ if(estado.sim[k]===1)acSim++; });
+  var feitasLe=0; Object.keys(estado.leitura).forEach(function(b){ feitasLe+=Object.keys(estado.leitura[b]).length; });
+  var dados={ kit:'Ingles 3 ano Unit 7 Home Sweet Home', quando:estado.quando,
+    leitura_respondidas:feitasLe, quiz_acertos:acQuiz, quiz_respondidas:Object.keys(estado.quiz).length,
+    simulado_acertos:acSim, simulado_respondidas:Object.keys(estado.sim).length, estado:estado };
+  var blob=new Blob([JSON.stringify(dados,null,2)],{type:'application/json'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='progresso_tato_un7.json'; a.click();
+}
+function importarAbrir(){ document.getElementById('fileImp').click(); }
+document.getElementById('fileImp').addEventListener('change',function(e){
+  var f=e.target.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){ try{ var o=JSON.parse(r.result); var e2=o.estado||o; if(e2 && typeof e2==='object'){ estado=Object.assign(estado,e2); salvar(); modal('Importado! ✅','Seu progresso foi carregado.'); renderTudo(); } }catch(err){ modal('Ops 🐢','Não consegui ler esse arquivo.'); } };
+  r.readAsText(f);
+});
+function zerarAbrir(){
+  modal('Zerar tudo? 🗑️','Isso apaga todo o progresso salvo. Tem certeza?',
+    '<button class="btn" style="background:var(--coral)" onclick="zerarConfirma()">Sim, zerar</button> <button class="btn sec" onclick="fecharModal()">Não</button>');
+}
+function zerarConfirma(){
+  estado={ leitura:{}, quiz:{}, sim:{}, simVisto:false, quando:'' };
+  store.del(CHAVE); fecharModal(); renderTudo();
+  var el=document.getElementById('saveInfo'); if(el) el.textContent='Progresso zerado.';
+}
+
+/* ---------- RELATÓRIO PAIS ---------- */
+function abrirPais(){
+  var c=document.getElementById('codPais').value.trim().toUpperCase();
+  if(c!=='PAIS-77'){ modal('Código 🔒','Código incorreto. Dica: é o código da família (PAIS-77).'); return; }
+  var acQuiz=0; Object.keys(estado.quiz).forEach(function(k){ if(estado.quiz[k]===1)acQuiz++; });
+  var acSim=0; Object.keys(estado.sim).forEach(function(k){ if(estado.sim[k]===1)acSim++; });
+  var feitasLe=0; Object.keys(estado.leitura).forEach(function(b){ feitasLe+=Object.keys(estado.leitura[b]).length; });
+  var html='<div class="card"><h3>📖 Visitas (Leitura Guiada)</h3><p>'+feitasLe+' de 18 perguntas respondidas.</p></div>'+
+    '<div class="card"><h3>🎯 Jogo (Quiz)</h3><p>'+acQuiz+' acertos em '+Object.keys(estado.quiz).length+' respondidas (de 10).</p></div>'+
+    '<div class="card"><h3>📝 Grande Passeio (Simulado)</h3><p>'+acSim+' acertos em '+Object.keys(estado.sim).length+' respondidas (de 20).'+(estado.simVisto?' ✔️ Resultado visto.':'')+'</p></div>'+
+    '<div class="card" style="font-size:.9em;color:#6b7a80">Último uso: '+(estado.quando||'—')+'</div>';
+  var el=document.getElementById('relatorioPais'); el.style.display='block'; el.innerHTML=html;
+}
+
+/* ---------- INICIALIZAÇÃO ---------- */
+function renderTudo(){ renderLeitura(); renderQuiz(); renderResumo(); renderSim(); }
+carregar();
+renderTudo();
+var si=document.getElementById('saveInfo'); if(si && estado.quando) si.textContent='✔️ Salvo em '+estado.quando;
+</script>
+</body>
+</html>
